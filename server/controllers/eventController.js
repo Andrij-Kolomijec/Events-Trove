@@ -2,14 +2,21 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const Event = require("../models/eventModel");
+const {
+  isValidText,
+  isValidDate,
+  isValidImageUrl,
+} = require("../utils/validators");
 
 const router = express.Router();
 
+// GET all events
 const getAllEvents = async (req, res) => {
   const events = await Event.find({}).sort({ createdAt: -1 });
   res.status(200).json(events);
 };
 
+// GET a single event
 const getEvent = async (req, res) => {
   const { id } = req.params;
 
@@ -25,8 +32,34 @@ const getEvent = async (req, res) => {
   res.status(200).json(event);
 };
 
+// validate and POST an event
 const createEvent = async (req, res, next) => {
   const { title, date, image, description } = req.body;
+
+  let errors = {};
+
+  if (!isValidText(title)) {
+    errors.title = "Invalid title.";
+  }
+
+  if (!isValidText(description)) {
+    errors.description = "Invalid description.";
+  }
+
+  if (!isValidDate(date)) {
+    errors.date = "Invalid date.";
+  }
+
+  if (!isValidImageUrl(image)) {
+    errors.image = "Invalid image.";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return res.status(422).json({
+      message: "Adding the event failed due to validation errors.",
+      errors,
+    });
+  }
 
   try {
     const event = await Event.create({ title, date, image, description });
@@ -36,6 +69,7 @@ const createEvent = async (req, res, next) => {
   }
 };
 
+// DELETE an event
 const deleteEvent = async (req, res) => {
   const { id } = req.params;
 
@@ -52,6 +86,7 @@ const deleteEvent = async (req, res) => {
   res.status(200).json(event);
 };
 
+// PATCH an event
 const updateEvent = async (req, res) => {
   const { id } = req.params;
 
