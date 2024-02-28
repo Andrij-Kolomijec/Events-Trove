@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 require("dotenv").config();
 
 const eventRoutes = require("./routes/events");
@@ -9,9 +10,10 @@ const port = process.env.PORT || 4000;
 
 // middleware
 
-// attaches data send in the body to the request object
-// => allows access to req.body
+// express.json() attaches data send in the body to the
+// request object => allows access to req.body
 app.use(express.json());
+app.use(cors());
 
 app.use((req, res, next) => {
   console.log(req.path, req.method);
