@@ -1,7 +1,5 @@
-// import classes from "./NewEvent.module.css";
-
-// type NewEventProps = {};
+import EventForm from "../components/EventForm";
 
 export default function NewEvent() {
-  return <div>NewEventForm</div>;
+  return <EventForm method="post" />;
 }

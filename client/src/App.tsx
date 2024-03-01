@@ -3,13 +3,17 @@ import Home from "./routes/Home";
 import MainLayout from "./components/MainLayout";
 import ErrorPage from "./routes/ErrorPage";
 import Events, { loader as eventsLoader } from "./routes/Events";
-import Newsletter from "./routes/Newsletter";
 import EventsLayout from "./components/EventsLayout";
 import EventDetails, {
   loader as eventDetailLoader,
+  action as deleteEventAction,
 } from "./routes/EventDetails";
 import EditEvent from "./routes/EditEvent";
 import NewEvent from "./routes/NewEvent";
+import { action as manipulateEventAction } from "./components/EventForm";
+import NewsletterPage, {
+  action as newsletterAction,
+} from "./routes/NewsletterPage";
 
 const router = createBrowserRouter([
   {
@@ -38,22 +42,26 @@ const router = createBrowserRouter([
               {
                 index: true,
                 element: <EventDetails />,
+                action: deleteEventAction,
               },
               {
                 path: "edit",
                 element: <EditEvent />,
+                action: manipulateEventAction,
               },
             ],
           },
           {
             path: "new",
             element: <NewEvent />,
+            action: manipulateEventAction,
           },
         ],
       },
       {
         path: "newsletter",
-        element: <Newsletter />,
+        element: <NewsletterPage />,
+        action: newsletterAction,
       },
     ],
   },
