@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
 import classes from "./Navbar.module.css";
+import Newsletter from "./Newsletter";
 
 export default function Navbar() {
   return (
-    <header>
+    <header className={classes.navbar}>
       <nav>
         <NavLink
           to="/"
@@ -25,6 +26,7 @@ export default function Navbar() {
           Newsletter
         </NavLink>
       </nav>
+      <Newsletter />
     </header>
   );
 }
