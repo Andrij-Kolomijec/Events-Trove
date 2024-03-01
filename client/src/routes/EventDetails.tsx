@@ -3,12 +3,13 @@ import {
   defer,
   json,
   useRouteLoaderData,
-  Params,
+  redirect,
 } from "react-router-dom";
 import { Suspense, useState } from "react";
 import { loadAllEvents } from "./Events";
 import EventItem from "../components/EventItem";
 import EventsList, { type Event } from "../components/EventsList";
+import { type Action } from "../components/EventForm";
 
 type RouteLoader = {
   event: Event;
@@ -18,7 +19,6 @@ type RouteLoader = {
 export default function EventDetails() {
   const { event, events } = useRouteLoaderData("event-details") as RouteLoader;
   const [isEventLoaded, setIsEventLoaded] = useState(false);
-  console.log(event);
 
   return (
     <>
@@ -48,7 +48,7 @@ export default function EventDetails() {
 }
 
 async function loadEvent(id: string) {
-  const response = await fetch(`${import.meta.env.VITE_PORT_EVENTS}/${id}`);
+  const response = await fetch(import.meta.env.VITE_PORT_EVENTS + id);
 
   if (!response.ok) {
     throw json(
@@ -63,13 +63,30 @@ async function loadEvent(id: string) {
   }
 }
 
-export async function loader({ params }: { params: Params<"id"> }) {
-  const id = params.id;
+export function loader({ params }: Action) {
+  const id = params!.id;
 
   // putting await in front of event(s) below makes the whole page wait
-  // also populates the form on edit from some reason
-  return await defer({
+  // also reason for <Await> usage - to resolve a promise
+  return defer({
     event: loadEvent(id!),
     events: loadAllEvents(),
   });
+}
+
+export async function action({ params, request }: Action) {
+  const id = params!.id;
+  const response = await fetch(import.meta.env.VITE_PORT_EVENTS + id, {
+    method: request!.method,
+  });
+
+  if (!response.ok) {
+    throw json(
+      { message: "Could not delete event." },
+      {
+        status: 500,
+      }
+    );
+  }
+  return redirect("/events");
 }
