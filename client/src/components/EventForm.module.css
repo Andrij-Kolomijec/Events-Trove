@@ -1,0 +1,48 @@
+.form {
+  height: 30vh;
+  width: 300px;
+  display: grid;
+  grid-template: repeat(4, 1fr) / 1fr 5fr;
+  gap: 1rem;
+  padding: 2rem;
+  align-self: center;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border: 4px solid var(--active);
+}
+
+.form input {
+  width: 200px;
+  height: 1.5rem;
+  padding-left: 2px;
+}
+
+.form textarea {
+  padding: 2px;
+}
+
+.form input,
+.form textarea {
+  background-color: antiquewhite;
+  text-align: start;
+  border: none;
+}
+
+.actions {
+  grid-area: 5 / 2 / 6 / 3;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.errors {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  color: rgb(255, 78, 78);
+}
+
+.errors li {
+  list-style-type: none;
+}

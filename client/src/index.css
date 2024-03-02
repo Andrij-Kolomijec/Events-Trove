@@ -2,3 +2,122 @@
   margin: 0;
   padding: 0;
 }
+
+:root {
+  --active: rgb(255, 184, 92);
+}
+
+body {
+  background: url("/bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  color: antiquewhite;
+}
+
+#root {
+  height: 99vh;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#main {
+  margin: 0 5vw;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.1s ease-in-out;
+}
+
+a:hover {
+  color: var(--active);
+}
+
+input {
+  background-color: antiquewhite;
+  border: none;
+  height: 1.5rem;
+  padding-left: 2px;
+  text-align: start;
+}
+
+button {
+  background-color: antiquewhite;
+  border-radius: 2px;
+  border: none;
+  padding: 5px 10px;
+  font-size: 1rem;
+  transition: transform 0.1s ease-in-out, background-color 0.1s ease-in-out;
+  font-weight: bold;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: var(--active);
+  transform: scale(1.1);
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+.signupButton {
+  margin-left: 1rem;
+}
+
+.active {
+  color: var(--active);
+}
+
+.newsletter > h1 {
+  padding-top: 2rem;
+}
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 40%;
+  align-self: center;
+  text-align: center;
+}
+
+.welcome > img {
+  height: 50px;
+  filter: invert(71%) sepia(36%) saturate(665%) hue-rotate(347deg)
+    brightness(102%) contrast(103%);
+}
+.welcome h1,
+.welcome h2 {
+  color: var(--active);
+}
+
+.welcome p,
+.newsletter p {
+  font-size: 1.5rem;
+}
+
+.welcome > div > p {
+  padding-top: 1rem;
+}
+
+.newsletter > p,
+.welcome {
+  padding: 2rem;
+}
+
+.newsletter {
+  text-align: center;
+}
+
+.clickable {
+  text-decoration: underline;
+}
+
+.eventsLayout {
+  text-align: end;
+}

@@ -1,0 +1,33 @@
+.events {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.events > p {
+  height: 81vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loaderLeft {
+  flex: 3;
+}
+
+.loaderRight {
+  flex: 1;
+}
+
+.loader {
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 880px) {
+  .events {
+    justify-content: space-evenly;
+  }
+}
