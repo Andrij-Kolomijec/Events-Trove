@@ -13,7 +13,7 @@ const router = express.Router();
 // GET all events
 const getAllEvents = async (req, res) => {
   const events = await Event.find({}).sort({ createdAt: -1 });
-  res.status(200).json({ events });
+  setTimeout(() => res.status(200).json({ events }), 0);
 };
 
 // GET a single event
@@ -28,7 +28,7 @@ const getEvent = async (req, res) => {
   if (!event) {
     return res.status(404).json({ error: "Event to show not found." });
   }
-  res.status(200).json({ event });
+  setTimeout(() => res.status(200).json({ event }), 0);
 };
 
 // validate and POST an event
