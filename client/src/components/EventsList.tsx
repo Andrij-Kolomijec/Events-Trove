@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import classes from "./EventsList.module.css";
+import dateFormatter from "../utils/dateFormatter";
 
 export type Event = {
   _id: string;
@@ -14,30 +15,30 @@ export type EventsProps = {
 };
 
 export default function EventsList({ events }: EventsProps) {
-  // const handleShowDetails = (fieldName) => (e) => {
-  //   setState(prevState => ({
-  //     ...prevState,
-  //     [fieldName]: e.target.value
-  //   }))
-  // }
-
+  const { id } = useParams();
   return (
     <div className={classes.events}>
       <h1>All Events</h1>
-      <ul className={classes.list}></ul>
-      {events.map((event: Event) => {
-        return (
-          <li className={classes.event} key={event._id}>
-            <Link to={`/events/${event._id}`}>
-              <img src={event.image} alt={event.title} />
-              <div className={classes.content}>
-                <h2>{event.title}</h2>
-                <time>{event.date}</time>
-              </div>
-            </Link>
-          </li>
-        );
-      })}
+      <ul className={classes.list}>
+        {events.map((event: Event) => {
+          return (
+            <li className={classes.event} key={event._id}>
+              <NavLink to={`/events/${event._id}`}>
+                <div className={classes.imageContainer}>
+                  <img src={event.image} alt={event.title} />
+                </div>
+                <div className={classes.content}>
+                  <h2>{event.title}</h2>
+                  <time>{dateFormatter(event)}</time>
+                </div>
+                {!id && (
+                  <div className={classes.description}>{event.description}</div>
+                )}
+              </NavLink>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
