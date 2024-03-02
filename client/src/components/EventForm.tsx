@@ -8,11 +8,11 @@ import {
   useNavigation,
 } from "react-router-dom";
 import classes from "./EventForm.module.css";
-import { Event } from "./EventsList";
+import { type Event } from "./EventsList";
 
 type EventFormProps = {
   method: "get" | "post" | "put" | "delete" | "patch";
-  event?: Event | undefined;
+  event?: Event;
 };
 
 export default function EventForm({ method, event }: EventFormProps) {
@@ -29,15 +29,8 @@ export default function EventForm({ method, event }: EventFormProps) {
   }
 
   return (
-    <Form method={method} className={classes.form}>
-      {data && data.errors && (
-        <ul>
-          {Object.values(data.errors).map((err) => (
-            <li key={err}>{err}</li>
-          ))}
-        </ul>
-      )}
-      <p>
+    <>
+      <Form method={method} className={classes.form}>
         <label htmlFor="title">Title</label>
         <input
           id="title"
@@ -46,8 +39,6 @@ export default function EventForm({ method, event }: EventFormProps) {
           required
           defaultValue={event ? event.title : ""}
         />
-      </p>
-      <p>
         <label htmlFor="image">Image</label>
         <input
           id="image"
@@ -56,18 +47,14 @@ export default function EventForm({ method, event }: EventFormProps) {
           required
           defaultValue={event ? event.image : ""}
         />
-      </p>
-      <p>
         <label htmlFor="date">Date</label>
         <input
           id="date"
-          type="date"
+          type="datetime-local"
           name="date"
           required
           defaultValue={event ? event.date : ""}
         />
-      </p>
-      <p>
         <label htmlFor="description">Description</label>
         <textarea
           id="description"
@@ -76,16 +63,23 @@ export default function EventForm({ method, event }: EventFormProps) {
           required
           defaultValue={event ? event.description : ""}
         />
-      </p>
-      <div className={classes.actions}>
-        <button type="button" onClick={handleCancel} disabled={isSubmitting}>
-          Cancel
-        </button>
-        <button disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : "Save"}
-        </button>
-      </div>
-    </Form>
+        <div className={classes.actions}>
+          <button type="button" onClick={handleCancel} disabled={isSubmitting}>
+            Cancel
+          </button>
+          <button disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Save"}
+          </button>
+        </div>
+      </Form>
+      {data && data.errors && (
+        <ul className={classes.errors}>
+          {Object.values(data.errors).map((err) => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 }
 
