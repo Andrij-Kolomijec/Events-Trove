@@ -1,5 +1,4 @@
 import { useFetcher } from "react-router-dom";
-import classes from "./Newsletter.module.css";
 import { useEffect } from "react";
 
 export default function Newsletter() {
@@ -13,18 +12,15 @@ export default function Newsletter() {
   }, [data, state]);
 
   return (
-    <fetcher.Form
-      method="post"
-      action="/newsletter"
-      className={classes.newsletter}
-    >
+    <fetcher.Form method="post" action="/newsletter">
       <input
         type="email"
         name="email"
         placeholder="Sign up for the newsletter"
         aria-label="Sign up for the newsletter"
+        required
       />
-      <button>Sign up</button>
+      <button className="signupButton">Sign up</button>
     </fetcher.Form>
   );
 }

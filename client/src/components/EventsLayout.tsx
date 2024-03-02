@@ -1,11 +1,12 @@
-import { Link, Outlet } from "react-router-dom";
-import classes from "./EventsLayout.module.css";
+import { NavLink, Outlet } from "react-router-dom";
 
 export default function EventsLayout() {
   return (
     <>
-      <div className={classes.eventsLayout}>
-        <Link to="new">New Event</Link>
+      <div className="eventsLayout">
+        <NavLink to="new" className="clickable">
+          Create New Event
+        </NavLink>
       </div>
       <Outlet />
     </>

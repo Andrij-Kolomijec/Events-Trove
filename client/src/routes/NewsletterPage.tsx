@@ -1,11 +1,11 @@
 import Newsletter from "../components/Newsletter";
 import { type Action } from "../components/EventForm";
-import classes from "./NewsletterPage.module.css";
 
 export default function NewsletterPage() {
   return (
-    <div className={classes.newsletter}>
+    <div className="newsletter">
       <h1>Join our newsletter!</h1>
+      <p>You will be notified when a new event is added.</p>
       <Newsletter />
     </div>
   );

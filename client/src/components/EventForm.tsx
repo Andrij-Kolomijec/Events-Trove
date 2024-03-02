@@ -28,6 +28,14 @@ export default function EventForm({ method, event }: EventFormProps) {
     navigate("..");
   }
 
+  // adjust the datetime string based on the users's timezone offset
+  const eventDate = new Date(event!.date);
+  const clientTimezoneOffset = eventDate.getTimezoneOffset();
+  const adjustedDate = new Date(
+    eventDate.getTime() - clientTimezoneOffset * 60000
+  );
+  const formattedDate = adjustedDate.toISOString().slice(0, 16);
+
   return (
     <>
       <Form method={method} className={classes.form}>
@@ -53,7 +61,7 @@ export default function EventForm({ method, event }: EventFormProps) {
           type="datetime-local"
           name="date"
           required
-          defaultValue={event ? event.date : ""}
+          defaultValue={formattedDate}
         />
         <label htmlFor="description">Description</label>
         <textarea

@@ -5,6 +5,7 @@ import {
   useRouteLoaderData,
   redirect,
 } from "react-router-dom";
+import classes from "./EventDetails.module.css";
 import { Suspense, useState } from "react";
 import { loadAllEvents } from "./Events";
 import EventItem from "../components/EventItem";
@@ -21,10 +22,10 @@ export default function EventDetails() {
   const [isEventLoaded, setIsEventLoaded] = useState(false);
 
   return (
-    <>
+    <div className={classes.events}>
       <Suspense
         fallback={
-          <p style={{ textAlign: "center" }}>Loading selected event...</p>
+          <p className={classes.loaderLeft}>Loading selected event...</p>
         }
       >
         <Await resolve={event}>
@@ -35,7 +36,7 @@ export default function EventDetails() {
         </Await>
       </Suspense>
       <Suspense
-        fallback={<p style={{ textAlign: "center" }}>Loading events...</p>}
+        fallback={<p className={classes.loaderRight}>Loading events...</p>}
       >
         <Await resolve={events}>
           {(loadedEvents) => {
@@ -43,7 +44,7 @@ export default function EventDetails() {
           }}
         </Await>
       </Suspense>
-    </>
+    </div>
   );
 }
 
