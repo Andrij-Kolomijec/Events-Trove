@@ -1,6 +1,7 @@
 import classes from "./ErrorPage.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function ErrorPage() {
   const [time, setTime] = useState(3);
@@ -21,7 +22,8 @@ function ErrorPage() {
   }, [time]);
 
   return (
-    <>
+    <div id="main">
+      <Navbar />
       <div className={classes.error}>
         <h1>Something went wrong</h1>
         <h3>
@@ -29,7 +31,7 @@ function ErrorPage() {
           {time === 1 ? "second" : "seconds"}.
         </h3>
       </div>
-    </>
+    </div>
   );
 }
 

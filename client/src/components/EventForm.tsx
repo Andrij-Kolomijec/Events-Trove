@@ -29,12 +29,15 @@ export default function EventForm({ method, event }: EventFormProps) {
   }
 
   // adjust the datetime string based on the users's timezone offset
-  const eventDate = new Date(event!.date);
-  const clientTimezoneOffset = eventDate.getTimezoneOffset();
-  const adjustedDate = new Date(
-    eventDate.getTime() - clientTimezoneOffset * 60000
-  );
-  const formattedDate = adjustedDate.toISOString().slice(0, 16);
+  let formattedDate;
+  if (event) {
+    const eventDate = new Date(event!.date);
+    const clientTimezoneOffset = eventDate.getTimezoneOffset();
+    const adjustedDate = new Date(
+      eventDate.getTime() - clientTimezoneOffset * 60000
+    );
+    formattedDate = adjustedDate.toISOString().slice(0, 16);
+  }
 
   return (
     <>
