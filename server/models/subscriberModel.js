@@ -14,9 +14,11 @@ const subscriberSchema = new Schema(
   { timestamps: true }
 );
 
-subscriberSchema.statics.subscribe = async (email) => {
+subscriberSchema.statics.subscribe = async function (email) {
   if (!email) throw Error("Email must be filled in.");
+
   if (!validator.isEmail(email)) throw Error("Invalid email.");
+
   const exists = await this.findOne({ email });
   if (exists) throw Error("Email address already subscribed.");
 

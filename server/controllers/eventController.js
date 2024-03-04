@@ -2,17 +2,19 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const Event = require("../models/eventModel");
+const Subscriber = require("../models/subscriberModel");
 const {
   isValidText,
   isValidDate,
   isValidImageUrl,
 } = require("../utils/validators");
+const sendEmail = require("../utils/mailer");
 
 const router = express.Router();
 
 // GET all events
 const getAllEvents = async (req, res) => {
-  const events = await Event.find({}).sort({ createdAt: -1 });
+  const events = await Event.find({}).sort({ date: -1 });
   setTimeout(() => res.status(200).json({ events }), 0);
 };
 
@@ -63,6 +65,9 @@ const createEvent = async (req, res, next) => {
   try {
     const event = await Event.create({ title, date, image, description });
     res.status(200).json({ message: "Event saved.", event });
+    // send emails to every subscriber after a new event is added
+    const subscribers = await Subscriber.find({});
+    sendEmail(subscribers, { title, date, description, id: event._id });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

@@ -1,15 +1,17 @@
 const Subscriber = require("../models/subscriberModel");
 const mongoose = require("mongoose");
+const sendEmail = require("../utils/mailer");
 
 async function subscribe(req, res) {
   const { email } = req.body;
-  console.log(email);
-  try {
-    const user = await Subscriber.create({ email });
 
-    res.status(200).json({ message: "Subscribed.", email });
+  try {
+    const subscriber = await Subscriber.subscribe(email);
+    res.status(200).json({ message: "Subscribed.", subscriber });
+    // send email upon subscription
+    sendEmail([subscriber]);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(422).json({ error: error.message });
   }
 }
 
