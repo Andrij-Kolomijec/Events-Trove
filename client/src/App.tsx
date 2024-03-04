@@ -11,9 +11,8 @@ import EventDetails, {
 import EditEvent from "./routes/EditEvent";
 import NewEvent from "./routes/NewEvent";
 import { action as manipulateEventAction } from "./components/EventForm";
-import NewsletterPage, {
-  action as newsletterAction,
-} from "./routes/NewsletterPage";
+import NewsletterPage, { action as subscribe } from "./routes/NewsletterPage";
+import Unsubscribed, { action as unsubscribe } from "./routes/Unsubscribed";
 
 const router = createBrowserRouter([
   {
@@ -61,7 +60,12 @@ const router = createBrowserRouter([
       {
         path: "newsletter",
         element: <NewsletterPage />,
-        action: newsletterAction,
+        action: subscribe,
+      },
+      {
+        path: "newsletter/:id",
+        element: <Unsubscribed />,
+        action: unsubscribe,
       },
     ],
   },

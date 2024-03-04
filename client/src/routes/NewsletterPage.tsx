@@ -1,5 +1,6 @@
 import Newsletter from "../components/Newsletter";
 import { type Action } from "../components/EventForm";
+import { json } from "react-router-dom";
 
 export default function NewsletterPage() {
   return (
@@ -12,9 +13,31 @@ export default function NewsletterPage() {
 }
 
 export async function action({ request }: Action) {
-  const data = await request!.formData();
-  const email = data.get("email");
+  const data = await request.formData();
+  const method = request.method;
 
-  console.log(email);
-  return { message: "Sign-up successful!" };
+  const email = { email: data.get("email") };
+
+  const response = await fetch(import.meta.env.VITE_PORT_NEWSLETTER, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(email),
+  });
+
+  if (response.status === 422) {
+    return response;
+  }
+
+  if (!response.ok) {
+    throw json(
+      { message: "Could not subscribe provided email." },
+      {
+        status: 500,
+      }
+    );
+  }
+
+  return { message: `Email ${email.email} subscribed successfully!` };
 }
