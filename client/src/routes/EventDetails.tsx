@@ -6,7 +6,7 @@ import {
   redirect,
 } from "react-router-dom";
 import classes from "./EventDetails.module.css";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { loadAllEvents } from "./Events";
 import EventItem from "../components/EventItem";
 import EventsList, { type Event } from "../components/EventsList";
@@ -19,28 +19,33 @@ type RouteLoader = {
 
 export default function EventDetails() {
   const { event, events } = useRouteLoaderData("event-details") as RouteLoader;
-  const [isEventLoaded, setIsEventLoaded] = useState(false);
+  // const [isEventLoaded, setIsEventLoaded] = useState(false);
 
   return (
     <div className={classes.events}>
       <Suspense
         fallback={
-          <p className={classes.loaderLeft}>Loading selected event...</p>
+          <div className={classes.loaderLeft}>
+            <span className="loader"></span>
+          </div>
         }
       >
         <Await resolve={event}>
           {(loadedEvent) => {
-            setIsEventLoaded(true);
             return <EventItem event={loadedEvent} />;
           }}
         </Await>
       </Suspense>
       <Suspense
-        fallback={<p className={classes.loaderRight}>Loading events...</p>}
+        fallback={
+          <div className={classes.loaderRight}>
+            <span className="loader"></span>
+          </div>
+        }
       >
         <Await resolve={events}>
           {(loadedEvents) => {
-            return isEventLoaded && <EventsList events={loadedEvents} />;
+            return <EventsList events={loadedEvents} />;
           }}
         </Await>
       </Suspense>

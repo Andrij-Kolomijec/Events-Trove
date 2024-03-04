@@ -27,6 +27,14 @@ body {
   flex-direction: column;
 }
 
+#main > span {
+  align-self: center;
+}
+
+#main > ul {
+  text-align: center;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -78,6 +86,7 @@ button:active {
 }
 
 .welcome {
+  height: 73vh;
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -86,7 +95,8 @@ button:active {
   text-align: center;
 }
 
-.welcome > img {
+.welcome > img,
+footer img {
   height: 50px;
   filter: invert(71%) sepia(36%) saturate(665%) hue-rotate(347deg)
     brightness(102%) contrast(103%);
@@ -110,7 +120,8 @@ button:active {
   padding: 2rem;
 }
 
-.newsletter {
+.newsletter,
+#newsletter {
   text-align: center;
 }
 
@@ -120,4 +131,64 @@ button:active {
 
 .eventsLayout {
   text-align: end;
+}
+
+footer {
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 -4vw;
+}
+
+footer img {
+  height: 50px;
+  transition: transform 0.1s ease-in-out;
+}
+footer img:hover {
+  transform: scale(1.1);
+}
+
+#unsubscribed {
+  margin: 5rem 0;
+  text-align: center;
+}
+
+#unsubscribed button {
+  margin-top: 3rem;
+  font-size: 2rem;
+}
+
+.loader {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  background-image: linear-gradient(antiquewhite 16px, transparent 0),
+    linear-gradient(var(--active) 16px, transparent 0),
+    linear-gradient(var(--active) 16px, transparent 0),
+    linear-gradient(antiquewhite 16px, transparent 0);
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  background-position: left top, left bottom, right top, right bottom;
+  animation: rotate 1.5s linear infinite;
+  /* align-self: center; */
+  margin-top: 10rem;
+}
+@keyframes rotate {
+  0% {
+    width: 64px;
+    height: 64px;
+    transform: rotate(0deg);
+  }
+  50% {
+    width: 30px;
+    height: 30px;
+    transform: rotate(180deg);
+  }
+  100% {
+    width: 64px;
+    height: 64px;
+    transform: rotate(360deg);
+  }
 }

@@ -6,7 +6,7 @@ export default function Events() {
   const { events } = useLoaderData() as EventsProps;
 
   return (
-    <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
+    <Suspense fallback={<span className="loader"></span>}>
       <Await resolve={events}>
         {(loadedEvents) => <EventsList events={loadedEvents} />}
       </Await>

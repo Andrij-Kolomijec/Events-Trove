@@ -1,6 +1,6 @@
 .events {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-wrap: wrap;
 }
 
@@ -13,16 +13,13 @@
 
 .loaderLeft {
   flex: 3;
+  display: flex;
+  justify-content: center;
 }
 
 .loaderRight {
   flex: 1;
-}
-
-.loader {
-  height: 70vh;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
