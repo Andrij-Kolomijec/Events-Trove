@@ -1,6 +1,6 @@
 import { Await, useRouteLoaderData } from "react-router-dom";
-import { type Event } from "../components/EventsList";
-import EventForm from "../components/EventForm";
+import { type Event } from "../components/events/EventsList";
+import EventForm from "../components/events/EventForm";
 
 type EventData = {
   event: Event;

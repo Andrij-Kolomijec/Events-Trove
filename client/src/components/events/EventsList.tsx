@@ -1,6 +1,6 @@
 import { NavLink, useParams } from "react-router-dom";
 import classes from "./EventsList.module.css";
-import dateFormatter from "../utils/dateFormatter";
+import dateFormatter from "../../utils/dateFormatter";
 
 export type Event = {
   _id: string;

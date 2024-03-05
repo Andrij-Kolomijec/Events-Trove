@@ -1,16 +1,16 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./routes/Home";
-import MainLayout from "./components/MainLayout";
+import MainLayout from "./components/layout/MainLayout";
 import ErrorPage from "./routes/ErrorPage";
 import Events, { loader as eventsLoader } from "./routes/Events";
-import EventsLayout from "./components/EventsLayout";
+import EventsLayout from "./components/layout/EventsLayout";
 import EventDetails, {
   loader as eventDetailLoader,
   action as deleteEventAction,
 } from "./routes/EventDetails";
 import EditEvent from "./routes/EditEvent";
 import NewEvent from "./routes/NewEvent";
-import { action as manipulateEventAction } from "./components/EventForm";
+import { action as manipulateEventAction } from "./components/events/EventForm";
 import NewsletterPage, { action as subscribe } from "./routes/NewsletterPage";
 import Unsubscribed, { action as unsubscribe } from "./routes/Unsubscribed";
 

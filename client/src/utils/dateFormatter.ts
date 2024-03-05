@@ -1,4 +1,4 @@
-import { type Event } from "../components/EventsList";
+import { type Event } from "../components/events/EventsList";
 
 export default function dateFormatter(eventItem: Event) {
   const formattedDate = new Date(eventItem.date).toLocaleDateString("en-GB", {

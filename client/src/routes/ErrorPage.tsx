@@ -1,7 +1,7 @@
 import classes from "./ErrorPage.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/layout/Navbar";
 
 function ErrorPage() {
   const [time, setTime] = useState(3);

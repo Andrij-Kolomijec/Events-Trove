@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Form, json, useActionData } from "react-router-dom";
-import { Action } from "../components/EventForm";
+import { Action } from "../components/events/EventForm";
 
 type Data = {
   message?: string;

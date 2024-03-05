@@ -1,4 +1,4 @@
-import Footer from "../components/Footer";
+import Footer from "../components/layout/Footer";
 import trove from "/trove.svg";
 
 export default function Home() {

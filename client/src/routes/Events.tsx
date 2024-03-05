@@ -1,6 +1,6 @@
 import { Await, defer, json, useLoaderData } from "react-router-dom";
 import { Suspense } from "react";
-import EventsList, { type EventsProps } from "../components/EventsList";
+import EventsList, { type EventsProps } from "../components/events/EventsList";
 
 export default function Events() {
   const { events } = useLoaderData() as EventsProps;

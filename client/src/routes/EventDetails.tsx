@@ -8,9 +8,9 @@ import {
 import classes from "./EventDetails.module.css";
 import { Suspense } from "react";
 import { loadAllEvents } from "./Events";
-import EventItem from "../components/EventItem";
-import EventsList, { type Event } from "../components/EventsList";
-import { type Action } from "../components/EventForm";
+import EventItem from "../components/events/EventItem";
+import EventsList, { type Event } from "../components/events/EventsList";
+import { type Action } from "../components/events/EventForm";
 
 type RouteLoader = {
   event: Event;

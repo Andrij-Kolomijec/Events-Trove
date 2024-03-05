@@ -1,5 +1,5 @@
-import Newsletter from "../components/Newsletter";
-import { type Action } from "../components/EventForm";
+import Newsletter from "../components/layout/Newsletter";
+import { type Action } from "../components/events/EventForm";
 import { json } from "react-router-dom";
 
 export default function NewsletterPage() {
