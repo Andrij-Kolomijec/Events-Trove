@@ -39,7 +39,7 @@ export async function action({ params, request }: Action) {
 
   if (!response.ok) {
     throw json(
-      { message: "Could not unsubscribe event." },
+      { message: "Could not unsubscribe email." },
       {
         status: 500,
       }
