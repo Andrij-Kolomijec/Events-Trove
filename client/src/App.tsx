@@ -13,6 +13,10 @@ import NewEvent from "./routes/NewEvent";
 import { action as manipulateEventAction } from "./components/events/EventForm";
 import NewsletterPage, { action as subscribe } from "./routes/NewsletterPage";
 import Unsubscribed, { action as unsubscribe } from "./routes/Unsubscribed";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchEventsData } from "./store/eventsActions";
+import { AppDispatch } from "./store";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +76,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(fetchEventsData());
+  }, [dispatch]);
+
   return <RouterProvider router={router} />;
 }
 

@@ -9,6 +9,8 @@ import {
 } from "react-router-dom";
 import classes from "./EventForm.module.css";
 import { type Event } from "./EventsList";
+import { useDispatch } from "react-redux";
+import { addEvent } from "../../store/eventsCounterSlice";
 
 type EventFormProps = {
   method: "get" | "post" | "put" | "delete" | "patch";
@@ -39,9 +41,15 @@ export default function EventForm({ method, event }: EventFormProps) {
     formattedDate = adjustedDate.toISOString().slice(0, 16);
   }
 
+  // needed only to add dispatch to the submit
+  const dispatch = useDispatch();
+  function handleSubmit() {
+    if (!data) dispatch(addEvent());
+  }
+
   return (
     <>
-      <Form method={method} className={classes.form}>
+      <Form method={method} className={classes.form} onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
         <input
           id="title"
@@ -55,7 +63,7 @@ export default function EventForm({ method, event }: EventFormProps) {
           id="image"
           type="url"
           name="image"
-          required
+          // required
           defaultValue={event ? event.image : ""}
         />
         <label htmlFor="date">Date</label>
@@ -105,7 +113,9 @@ export async function action({ request, params }: Action) {
 
   const eventData = {
     title: data.get("title"),
-    image: data.get("image"),
+    image:
+      data.get("image") ||
+      "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg",
     date: data.get("date"),
     description: data.get("description"),
   };
