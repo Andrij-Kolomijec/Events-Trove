@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchEventsData } from "./eventsActions";
 
 type CounterSlice = {
   total: number;
@@ -21,6 +22,14 @@ const eventCounterSlice = createSlice({
     removeEvent(state) {
       state.total--;
     },
+  },
+
+  // when using createAsyncThunk
+
+  extraReducers: (builder) => {
+    builder.addCase(fetchEventsData.fulfilled, (state, action) => {
+      state.total = action.payload;
+    });
   },
 });
 
