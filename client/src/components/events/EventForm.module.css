@@ -1,9 +1,8 @@
 .form {
-  height: 30vh;
-  width: 300px;
+  width: 400px;
   display: grid;
-  grid-template: repeat(4, 1fr) / 1fr 5fr;
-  gap: 1rem;
+  grid-template: repeat(4, auto) / 1fr 5fr;
+  gap: 2rem;
   padding: 2rem;
   align-self: center;
   backdrop-filter: blur(5px);
@@ -13,13 +12,14 @@
 }
 
 .form input {
-  width: 200px;
+  max-width: 286px;
   height: 1.5rem;
   padding-left: 2px;
 }
 
 .form textarea {
   padding: 2px;
+  height: auto;
 }
 
 .form input,
@@ -45,4 +45,13 @@
 
 .errors li {
   list-style-type: none;
+}
+
+@media (max-width: 600px) {
+  .form {
+    margin-top: 1rem;
+    width: auto;
+    gap: 1rem;
+    padding: 1rem;
+  }
 }

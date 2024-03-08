@@ -22,11 +22,11 @@ export default function Newsletter() {
         id="newsletter"
         type="email"
         name="email"
-        placeholder="Sign up for the newsletter"
-        aria-label="Sign up for the newsletter"
+        placeholder="Subscribe for the newsletter"
+        aria-label="Newsletter subscription email input"
         required
       />
-      <button className="signupButton">Sign up</button>
+      <button className="signupButton">Subscribe</button>
     </fetcher.Form>
   );
 }

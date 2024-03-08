@@ -9,6 +9,7 @@
 
 .event > img {
   height: 25vw;
+  min-height: 170px;
   object-fit: contain;
 }
 

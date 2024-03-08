@@ -1,4 +1,3 @@
-import Footer from "../components/layout/Footer";
 import trove from "/trove.svg";
 
 export default function Home() {
@@ -26,7 +25,6 @@ export default function Home() {
         </div>
         <img src={trove} alt="The Trove" />
       </div>
-      <Footer />
     </>
   );
 }

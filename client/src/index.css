@@ -27,8 +27,12 @@ body {
   flex-direction: column;
 }
 
-#main > span {
-  align-self: center;
+#content {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
+  height: 80vh;
 }
 
 #main > ul {
@@ -85,6 +89,16 @@ button:active {
   padding-top: 2rem;
 }
 
+.eventsLayout {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+
+.newEvent {
+  align-self: flex-end;
+}
+
 .welcome {
   height: 73vh;
   display: flex;
@@ -127,10 +141,6 @@ footer img {
 
 .clickable {
   text-decoration: underline;
-}
-
-.eventsLayout {
-  text-align: end;
 }
 
 footer {
