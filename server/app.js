@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const eventRoutes = require("./routes/events");
 const subscribeRoute = require("./routes/subscriber");
+const userRoute = require("./routes/user");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 // });
 app.use("/events", eventRoutes);
 app.use("/newsletter", subscribeRoute);
+app.use("/authentication", userRoute);
 
 // connect to MongoDB and listen for requests
 const mongoDB = process.env.MONGODB_URI;
