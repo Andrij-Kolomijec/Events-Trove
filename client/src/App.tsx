@@ -11,18 +11,30 @@ import EventDetails, {
 import EditEvent from "./routes/EditEvent";
 import NewEvent from "./routes/NewEvent";
 import { action as manipulateEventAction } from "./components/events/EventForm";
-import NewsletterPage, { action as subscribe } from "./routes/NewsletterPage";
-import Unsubscribed, { action as unsubscribe } from "./routes/Unsubscribed";
+import NewsletterPage, {
+  action as subscribeAction,
+} from "./routes/NewsletterPage";
+import Unsubscribed, {
+  action as unsubscribeAction,
+} from "./routes/Unsubscribed";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchEventsData } from "./store/eventsActions";
-import { AppDispatch } from "./store";
+import { type AppDispatch } from "./store";
+import Authentication, {
+  action as authenticate,
+} from "./routes/Authentication";
+import { action as logoutAction } from "./routes/Logout";
+import { checkAuthLoader, tokenLoader } from "./utils/authJWT";
+import EventsError from "./routes/EventsError";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     errorElement: <ErrorPage />,
+    id: "root",
+    loader: tokenLoader,
     children: [
       {
         index: true,
@@ -31,6 +43,7 @@ const router = createBrowserRouter([
       {
         path: "events",
         element: <EventsLayout />,
+        errorElement: <EventsError />,
         children: [
           {
             index: true,
@@ -51,6 +64,7 @@ const router = createBrowserRouter([
                 path: "edit",
                 element: <EditEvent />,
                 action: manipulateEventAction,
+                loader: checkAuthLoader,
               },
             ],
           },
@@ -58,26 +72,36 @@ const router = createBrowserRouter([
             path: "new",
             element: <NewEvent />,
             action: manipulateEventAction,
+            loader: checkAuthLoader,
           },
         ],
       },
       {
         path: "newsletter",
         element: <NewsletterPage />,
-        action: subscribe,
+        action: subscribeAction,
       },
       {
         path: "newsletter/:id",
         element: <Unsubscribed />,
-        action: unsubscribe,
+        action: unsubscribeAction,
+      },
+      {
+        path: "authentication",
+        element: <Authentication />,
+        action: authenticate,
+      },
+      {
+        path: "logout",
+        action: logoutAction,
       },
     ],
   },
 ]);
 
 function App() {
+  // does not load the data
   const dispatch = useDispatch<AppDispatch>();
-
   useEffect(() => {
     dispatch(fetchEventsData());
   }, [dispatch]);

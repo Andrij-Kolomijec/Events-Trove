@@ -11,6 +11,7 @@ import { loadAllEvents } from "./Events";
 import EventItem from "../components/events/EventItem";
 import EventsList, { type Event } from "../components/events/EventsList";
 import { type Action } from "../components/events/EventForm";
+import { getAuthToken } from "../utils/authJWT";
 
 type RouteLoader = {
   event: Event;
@@ -82,9 +83,18 @@ export function loader({ params }: Action) {
 
 export async function action({ params, request }: Action) {
   const id = params!.id;
+  const token = getAuthToken();
+
   const response = await fetch(import.meta.env.VITE_PORT_EVENTS + id, {
     method: request!.method,
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   });
+
+  // if (response.status === 422 || response.status === 401) {
+  //   return response;
+  // }
 
   if (!response.ok) {
     throw json(

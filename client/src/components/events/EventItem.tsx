@@ -1,4 +1,9 @@
-import { Link, useSubmit } from "react-router-dom";
+import {
+  Link,
+  useActionData,
+  useRouteLoaderData,
+  useSubmit,
+} from "react-router-dom";
 import classes from "./EventItem.module.css";
 import { Event } from "./EventsList";
 import dateFormatter from "../../utils/dateFormatter";
@@ -8,6 +13,8 @@ import { removeEvent } from "../../store/eventsCounterSlice";
 export default function EventItem({ event }: { event: Event }) {
   const submit = useSubmit();
   const dispatch = useDispatch();
+  const data = useActionData() as { error: string; message: string };
+  const token = useRouteLoaderData("root") as { token: string };
 
   // if <Form> was used, it would not trigger the confirmation
   function handleDelete() {
@@ -30,13 +37,17 @@ export default function EventItem({ event }: { event: Event }) {
           <i>{dateFormatter(event)}</i>
         </time>
         <p>{event.description}</p>
-        <menu className={classes.actions}>
-          <Link to="edit" className="clickable">
-            Edit
-          </Link>
-          <button onClick={handleDelete}>Delete</button>
-        </menu>
+
+        {token && (
+          <menu className={classes.actions}>
+            <Link to="edit" className="clickable">
+              Edit
+            </Link>
+            <button onClick={handleDelete}>Delete</button>
+          </menu>
+        )}
       </div>
+      {data && data.error && <p className={classes.errors}> {data.message}</p>}
     </article>
   );
 }
