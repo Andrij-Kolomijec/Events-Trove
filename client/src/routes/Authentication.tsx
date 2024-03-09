@@ -6,9 +6,11 @@ import {
   useActionData,
   useNavigation,
   useSearchParams,
+  useSubmit,
 } from "react-router-dom";
 import classes from "./Authentication.module.css";
 import { type Action } from "../components/events/EventForm";
+import { useRef } from "react";
 
 export default function Authentication() {
   const data = useActionData() as { error: string };
@@ -17,33 +19,63 @@ export default function Authentication() {
   const isLogin = searchParams.get("mode") === "login";
   const isSubmitting = navigation.state === "submitting";
 
+  const email = useRef<HTMLInputElement>(null);
+  const pass = useRef<HTMLInputElement>(null);
+  const submit = useSubmit();
+
+  function handleGuestLogin() {
+    email.current!.value = "guest@test.org";
+    pass.current!.value = import.meta.env.VITE_PORT_GUEST;
+    submit(
+      { email: "guest@test.org", password: import.meta.env.VITE_PORT_GUEST },
+      { method: "post" }
+    );
+  }
+
   return (
     <>
       <Form method="post" className={classes.authForm}>
         <div className={classes.input}>
           <label htmlFor="username">Email (username)</label>
-          <input name="email" id="username" type="text" autoComplete="on" />
+          <input
+            ref={email}
+            name="email"
+            id="username"
+            type="email"
+            autoComplete="on"
+            required
+          />
         </div>
         <div className={classes.input}>
           <label htmlFor="password">Password</label>
-          <input name="password" id="password" type="text" autoComplete="off" />
+          <input
+            ref={pass}
+            name="password"
+            id="password"
+            type="password"
+            autoComplete="off"
+            required
+          />
         </div>
-        {/* {!isLogin && (
+        {!isLogin && (
           <div className={classes.input}>
             <label htmlFor="passwordConfirm">Confirm password</label>
             <input
               name="passwordConfirm"
               id="passwordConfirm"
-              type="text"
+              type="password"
               autoComplete="off"
+              required
             />
           </div>
-        )} */}
+        )}
         <div className={classes.buttons}>
           <button disabled={isSubmitting}>
-            {isSubmitting ? "Submitting..." : isLogin ? "Log in" : "Sign Up"}
+            {isSubmitting ? "Submitting..." : isLogin ? "Log In" : "Sign Up"}
           </button>
-          {isLogin && <button>Log in as a Guest</button>}
+          {isLogin && (
+            <button onClick={handleGuestLogin}>Log in as a Guest</button>
+          )}
         </div>
         {isLogin ? (
           <p>
@@ -68,6 +100,12 @@ export default function Authentication() {
   );
 }
 
+type AuthData = {
+  email: FormDataEntryValue | null;
+  password: FormDataEntryValue | null;
+  passwordConfirm?: FormDataEntryValue | null;
+};
+
 export async function action({ request }: Action) {
   const searchParams = new URL(request.url).searchParams;
   const mode = searchParams.get("mode") || "login";
@@ -77,10 +115,14 @@ export async function action({ request }: Action) {
   }
 
   const data = await request.formData();
-  const authData = {
+  const authData: AuthData = {
     email: data.get("email"),
     password: data.get("password"),
   };
+
+  if (mode === "signup") {
+    authData.passwordConfirm = data.get("passwordConfirm");
+  }
 
   const response = await fetch(
     import.meta.env.VITE_PORT_AUTHENTICATION + mode,

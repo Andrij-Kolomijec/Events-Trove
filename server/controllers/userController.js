@@ -21,8 +21,12 @@ async function userLogin(req, res) {
 }
 
 async function userSignup(req, res) {
-  const { email, password } = req.body;
+  const { email, password, passwordConfirm } = req.body;
   try {
+    if (password !== passwordConfirm) {
+      return res.status(422).json({ error: "Passwords must match." });
+    }
+
     const user = await User.signup(email, password);
 
     const token = createToken(user._id);
@@ -32,6 +36,7 @@ async function userSignup(req, res) {
     res.status(422).json({ error: error.message });
   }
 }
+
 module.exports = {
   userLogin,
   userSignup,
