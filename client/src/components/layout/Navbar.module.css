@@ -10,6 +10,7 @@
 
 .navbar ul {
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
 }
 .navbar li {
@@ -42,4 +43,28 @@
 .navbar li .active p::after {
   opacity: 1;
   transform: scale(1);
+}
+
+.navbar form {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    height: auto;
+  }
+  .navbar ul {
+    gap: 10px;
+    justify-content: space-evenly;
+  }
+  .navbar form {
+    margin: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .navbar button {
+    margin-top: 5px;
+  }
 }
