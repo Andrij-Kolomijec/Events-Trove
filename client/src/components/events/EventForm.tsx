@@ -4,6 +4,7 @@ import {
   json,
   redirect,
   useActionData,
+  useMatches,
   useNavigate,
   useNavigation,
 } from "react-router-dom";
@@ -11,6 +12,7 @@ import classes from "./EventForm.module.css";
 import { type Event } from "./EventsList";
 import { useDispatch } from "react-redux";
 import { addEvent } from "../../store/eventsCounterSlice";
+import { getAuthToken } from "../../utils/authJWT";
 
 type EventFormProps = {
   method: "get" | "post" | "put" | "delete" | "patch";
@@ -42,9 +44,11 @@ export default function EventForm({ method, event }: EventFormProps) {
   }
 
   // needed only to add dispatch to the submit
+  const matches = useMatches();
   const dispatch = useDispatch();
   function handleSubmit() {
-    if (!data) dispatch(addEvent());
+    if (!data && matches[matches.length - 1].pathname.slice(-4) !== "edit")
+      dispatch(addEvent());
   }
 
   return (
@@ -104,12 +108,17 @@ export default function EventForm({ method, event }: EventFormProps) {
 
 export type Action = {
   params?: Params<"id">;
-  request: { method: string; formData: () => Promise<FormData> };
+  request: {
+    method: string;
+    formData: () => Promise<FormData>;
+    url: string;
+  };
 };
 
 export async function action({ request, params }: Action) {
   const data = await request.formData();
   const method = request.method;
+  const token = getAuthToken();
 
   const eventData = {
     title: data.get("title"),
@@ -133,6 +142,7 @@ export async function action({ request, params }: Action) {
       method: method,
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify(eventData),
     }
