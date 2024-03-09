@@ -25,7 +25,7 @@ userSchema.statics.signup = async function (email, password) {
 
   if (!validator.isStrongPassword(password))
     throw Error(
-      "Password should have a letter, a capital letter, a number, a special character and be at least 6 characters long."
+      "Password should have a letter, a capital letter, a number, a special character and be at least 8 characters long."
     );
 
   const salt = await bcrypt.genSalt(14);
