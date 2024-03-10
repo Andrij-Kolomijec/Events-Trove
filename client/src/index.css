@@ -85,10 +85,6 @@ button:active {
   color: var(--active);
 }
 
-.newsletter > h1 {
-  padding-top: 2rem;
-}
-
 .eventsLayout {
   display: flex;
   flex-direction: column;
@@ -104,7 +100,7 @@ button:active {
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  width: 40%;
+  max-width: 510px;
   align-self: center;
   text-align: center;
 }
@@ -120,13 +116,16 @@ footer img {
   color: var(--active);
 }
 
+.welcome > div > p {
+  padding-top: 1rem;
+}
 .welcome p,
 .newsletter p {
   font-size: 1.5rem;
 }
 
-.welcome > div > p {
-  padding-top: 1rem;
+.newsletter > h1 {
+  padding-top: 2rem;
 }
 
 .newsletter > p,
@@ -137,6 +136,7 @@ footer img {
 .newsletter,
 #newsletter {
   text-align: center;
+  min-width: 200px;
 }
 
 .clickable {
@@ -200,5 +200,15 @@ footer img:hover {
     width: 64px;
     height: 64px;
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .welcome {
+    max-width: 250px;
+    height: auto;
+  }
+  .welcome p {
+    font-size: 1rem;
   }
 }

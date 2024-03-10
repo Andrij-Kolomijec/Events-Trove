@@ -18,7 +18,7 @@
 }
 
 .slide > p {
-  white-space: wrap;
+  white-space: pre-wrap;
   width: 100%;
   padding-top: 1rem;
 }
@@ -42,4 +42,15 @@
 
 .slideshowDot.active {
   background-color: var(--active);
+}
+
+@media (max-width: 600px) {
+  .slideshow {
+    font-size: smaller;
+    /* width: 90%; */
+    height: auto;
+  }
+  .slide > * {
+    font-size: 1rem;
+  }
 }
