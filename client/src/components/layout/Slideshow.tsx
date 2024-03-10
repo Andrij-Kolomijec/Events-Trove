@@ -9,7 +9,7 @@ type SlideshowProps = {
 
 export default function Slideshow({ content }: SlideshowProps) {
   const [index, setIndex] = useState(0);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef(null);
 
   function resetTimeout() {
     if (timeoutRef.current) {
