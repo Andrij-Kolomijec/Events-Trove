@@ -1,9 +1,8 @@
 # Events-Trove
 
-<!-- [:arrow_forward: visit here](https://idyllic-cannoli-a55e05.netlify.app)
+[:arrow_forward: visit here](https://main--imaginative-kringle-9ee298.netlify.app/)
 
-![Preview Screenshot](https://github.com/Andrij-Kolomijec/Workouts-app/blob/main/client/public/preview1.png)
-![Preview Screenshot](https://github.com/Andrij-Kolomijec/Workouts-app/blob/main/client/public/preview2.png) -->
+- Loading data from the server might take a while.
 
 ## MERN project
 
