@@ -1,6 +1,8 @@
 import { NavLink, useParams } from "react-router-dom";
 import classes from "./EventsList.module.css";
 import dateFormatter from "../../utils/dateFormatter";
+import SearchEvents from "../layout/SearchEvents";
+import { useState } from "react";
 
 export type Event = {
   _id: string;
@@ -15,13 +17,19 @@ export type EventsProps = {
 };
 
 export default function EventsList({ events }: EventsProps) {
+  const [displayedEvents, setDisplayedEvents] = useState(events);
+
   const { id } = useParams();
+
   return (
     <div className={classes.events}>
-      <h1>All Events</h1>
+      <div className={classes.header}>
+        <h1>All Events</h1>
+        <SearchEvents events={events} onChange={setDisplayedEvents} />
+      </div>
       <ul className={classes.list}>
         {events.length > 0 ? (
-          events.map((event: Event) => {
+          displayedEvents.map((event: Event) => {
             return (
               <li className={classes.event} key={event._id}>
                 <NavLink to={`/events/${event._id}`}>

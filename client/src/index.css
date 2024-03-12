@@ -143,6 +143,12 @@ footer img {
   text-decoration: underline;
 }
 
+#searchBar {
+  background: transparent;
+  text-align: center;
+  color: antiquewhite;
+}
+
 footer {
   padding: 1rem;
   text-align: center;
