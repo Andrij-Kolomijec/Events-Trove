@@ -6,7 +6,6 @@ import {
   useActionData,
   useNavigation,
   useSearchParams,
-  useSubmit,
 } from "react-router-dom";
 import classes from "./Authentication.module.css";
 import { type Action } from "../components/events/EventForm";
@@ -21,15 +20,10 @@ export default function Authentication() {
 
   const email = useRef<HTMLInputElement>(null);
   const pass = useRef<HTMLInputElement>(null);
-  const submit = useSubmit();
 
   function handleGuestLogin() {
     email.current!.value = "guest@test.org";
     pass.current!.value = import.meta.env.VITE_PORT_GUEST;
-    submit(
-      { email: "guest@test.org", password: import.meta.env.VITE_PORT_GUEST },
-      { method: "post" }
-    );
   }
 
   return (
