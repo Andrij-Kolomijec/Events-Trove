@@ -1,14 +1,19 @@
 import Newsletter from "../components/layout/Newsletter";
 import { type Action } from "../components/events/EventForm";
 import { json } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function NewsletterPage() {
   return (
-    <div className="newsletter">
+    <motion.div
+      initial={{ opacity: 0, y: -30 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="newsletter"
+    >
       <h1>Join our newsletter!</h1>
       <p>You will be notified when a new event is added.</p>
       <Newsletter />
-    </div>
+    </motion.div>
   );
 }
 
