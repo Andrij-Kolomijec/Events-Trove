@@ -3,12 +3,19 @@ import { motion, HTMLMotionProps } from "framer-motion";
 type ButtonProps = HTMLMotionProps<"button"> &
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children: React.ReactNode;
+    bgColor?: string;
+    color?: string;
   };
 
-export default function Button({ children, ...props }: ButtonProps) {
+export default function Button({
+  children,
+  bgColor = "#ffb85c",
+  color = "#000000",
+  ...props
+}: ButtonProps) {
   return (
     <motion.button
-      whileHover={{ scale: 1.1, backgroundColor: "#ffb85c" }}
+      whileHover={{ scale: 1.1, backgroundColor: bgColor, color: color }}
       whileTap={{ scale: 0.98 }}
       transition={{
         type: "spring",

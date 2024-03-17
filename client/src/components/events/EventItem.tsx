@@ -21,21 +21,18 @@ export default function EventItem({ event }: { event: Event }) {
   const token = useRouteLoaderData("root") as { token: string };
   const [toDelete, setToDelete] = useState<boolean>();
 
-  // if <Form> was used, it would not trigger the confirmation
   function handleDelete() {
-    // const proceed = window.confirm(
-    //   `You are about to delete event "${event.title}". Confirm to proceed.`
-    // );
-    // if (proceed) {
-    // activates on the current path
     submit(null, { method: "delete" });
     dispatch(removeEvent());
-    // }
+  }
+
+  function handleCancelDeletion() {
+    setToDelete(false);
   }
 
   const buttonStyle = {
-    backgroundColor: "black",
-    color: "antiquewhite",
+    backgroundColor: "#000000",
+    color: "#faebd7",
     margin: "0 1rem",
   };
 
@@ -43,16 +40,23 @@ export default function EventItem({ event }: { event: Event }) {
     <>
       <AnimatePresence>
         {toDelete && (
-          <Modal
-            title="Deletion confirmation"
-            onClose={() => setToDelete(false)}
-          >
+          <Modal title="Deletion confirmation" onClose={handleCancelDeletion}>
             <p>You are about to delete event "{event.title}".</p>
             <p>Confirm to proceed.</p>
-            <Button style={buttonStyle} onClick={() => setToDelete(false)}>
+            <Button
+              style={buttonStyle}
+              onClick={handleCancelDeletion}
+              bgColor="#ffb85c"
+              color="#000000"
+            >
               Cancel
             </Button>
-            <Button style={buttonStyle} onClick={handleDelete}>
+            <Button
+              style={buttonStyle}
+              onClick={handleDelete}
+              bgColor="#ffb85c"
+              color="#000000"
+            >
               Confirm
             </Button>
           </Modal>
@@ -61,6 +65,7 @@ export default function EventItem({ event }: { event: Event }) {
       <motion.article
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -30 }}
         className={classes.event}
       >
         <img src={event.image} alt={event.title} />
