@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { getAuthEmail } from "../../utils/authJWT";
 import Button from "../Button";
+import { motion } from "framer-motion";
 
 export default function Navbar() {
   const total = useSelector((state: RootState) => state.events.total);
@@ -32,7 +33,13 @@ export default function Navbar() {
               isActive ? `${classes.active} active` : undefined
             }
           >
-            <p>Events ({total})</p>
+            <motion.p
+              key={total}
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 0.3 }}
+            >
+              Events ({total})
+            </motion.p>
           </NavLink>
         </li>
         <li>
