@@ -10,6 +10,8 @@ import {
 import classes from "./Authentication.module.css";
 import { type Action } from "../components/events/EventForm";
 import { useRef } from "react";
+import { motion } from "framer-motion";
+import Button from "../components/Button";
 
 export default function Authentication() {
   const data = useActionData() as { error: string };
@@ -27,7 +29,11 @@ export default function Authentication() {
   }
 
   return (
-    <>
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: -30 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
       <Form method="post" className={classes.authForm}>
         <div className={classes.input}>
           <label htmlFor="username">Email (username)</label>
@@ -64,11 +70,11 @@ export default function Authentication() {
           </div>
         )}
         <div className={classes.buttons}>
-          <button disabled={isSubmitting}>
+          <Button disabled={isSubmitting}>
             {isSubmitting ? "Submitting..." : isLogin ? "Log In" : "Sign Up"}
-          </button>
+          </Button>
           {isLogin && (
-            <button onClick={handleGuestLogin}>Log in as a Guest</button>
+            <Button onClick={handleGuestLogin}>Log in as a Guest</Button>
           )}
         </div>
         {isLogin ? (
@@ -90,7 +96,7 @@ export default function Authentication() {
         )}
       </Form>
       {data && data.error && <p className={classes.errors}> {data.error}</p>}
-    </>
+    </motion.div>
   );
 }
 

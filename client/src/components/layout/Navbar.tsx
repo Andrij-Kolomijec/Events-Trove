@@ -4,6 +4,7 @@ import Newsletter from "./Newsletter";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { getAuthEmail } from "../../utils/authJWT";
+import Button from "../Button";
 
 export default function Navbar() {
   const total = useSelector((state: RootState) => state.events.total);
@@ -59,7 +60,7 @@ export default function Navbar() {
           <>
             <li>
               <Form action="/logout" method="post">
-                <button>Logout</button>
+                <Button>Logout</Button>
                 <span>{email}</span>
               </Form>
             </li>

@@ -1,5 +1,6 @@
 import Slideshow from "../components/layout/Slideshow";
 import trove from "/trove.svg";
+import { motion } from "framer-motion";
 
 const welcomeContent = [
   <>
@@ -26,10 +27,14 @@ const welcomeContent = [
 export default function Home() {
   return (
     <>
-      <div className="welcome">
+      <motion.div
+        initial={{ opacity: 0, y: -30, rotate: 180 }}
+        animate={{ opacity: 1, y: 0, rotate: 0 }}
+        className="welcome"
+      >
         <Slideshow content={welcomeContent} />
         <img src={trove} alt="The Trove" />
-      </div>
+      </motion.div>
     </>
   );
 }

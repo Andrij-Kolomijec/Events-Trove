@@ -1,8 +1,9 @@
 import { NavLink, useParams } from "react-router-dom";
+import { useState } from "react";
 import classes from "./EventsList.module.css";
 import dateFormatter from "../../utils/dateFormatter";
 import SearchEvents from "../layout/SearchEvents";
-import { useState } from "react";
+import { motion } from "framer-motion";
 
 export type Event = {
   _id: string;
@@ -27,11 +28,33 @@ export default function EventsList({ events }: EventsProps) {
         <h1>All Events</h1>
         <SearchEvents events={events} onChange={setDisplayedEvents} />
       </div>
-      <ul className={classes.list}>
+      <motion.ul
+        variants={{
+          visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.05 } },
+          // hidden: { opacity: 0, y: 0 }, // not necessary
+        }}
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        className={classes.list}
+      >
         {events.length > 0 ? (
           displayedEvents.map((event: Event) => {
             return (
-              <li className={classes.event} key={event._id}>
+              <motion.li
+                variants={{
+                  hidden: { opacity: 0, scale: 0.5 },
+                  visible: {
+                    opacity: 1,
+                    scale: 1,
+                    transition: { duration: 0.5 },
+                  },
+                }}
+                exit={{ opacity: 1, scale: 1 }}
+                transition={{ type: "spring" }}
+                className={classes.event}
+                key={event._id}
+              >
                 <NavLink to={`/events/${event._id}`}>
                   <div className={classes.imageContainer}>
                     <img src={event.image} alt={event.title} />
@@ -46,13 +69,13 @@ export default function EventsList({ events }: EventsProps) {
                     </div>
                   )}
                 </NavLink>
-              </li>
+              </motion.li>
             );
           })
         ) : (
           <h2>There are not any events planned, yet.</h2>
         )}
-      </ul>
+      </motion.ul>
     </div>
   );
 }

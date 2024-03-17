@@ -13,6 +13,9 @@ import { type Event } from "./EventsList";
 import { useDispatch } from "react-redux";
 import { addEvent } from "../../store/eventsCounterSlice";
 import { getAuthToken } from "../../utils/authJWT";
+import { useRef } from "react";
+import { motion, stagger, useAnimate } from "framer-motion";
+import Button from "../Button";
 
 type EventFormProps = {
   method: "get" | "post" | "put" | "delete" | "patch";
@@ -43,23 +46,47 @@ export default function EventForm({ method, event }: EventFormProps) {
     formattedDate = adjustedDate.toISOString().slice(0, 16);
   }
 
+  const title = useRef<HTMLInputElement | null>(null);
+  const date = useRef<HTMLInputElement | null>(null);
+  const description = useRef<HTMLTextAreaElement | null>(null);
+  const [scope, animate] = useAnimate();
+
   // needed only to add dispatch to the submit
   const matches = useMatches();
   const dispatch = useDispatch();
   function handleSubmit() {
+    if (
+      !title.current!.value.trim() ||
+      !date.current!.value.trim() ||
+      !description.current!.value.trim()
+    ) {
+      animate(
+        "input, textarea",
+        { x: [-10, 0, 10, 0] },
+        { type: "spring", duration: 0.2, delay: stagger(0.05) }
+      );
+      return;
+    }
+
     if (!data && matches[matches.length - 1].pathname.slice(-4) !== "edit")
       dispatch(addEvent());
   }
 
   return (
-    <>
-      <Form method={method} className={classes.form} onSubmit={handleSubmit}>
+    <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }}>
+      <Form
+        ref={scope}
+        method={method}
+        className={classes.form}
+        onSubmit={handleSubmit}
+      >
         <label htmlFor="title">Title</label>
         <input
+          ref={title}
           id="title"
           type="text"
           name="title"
-          required
+          // required
           defaultValue={event ? event.title : ""}
         />
         <label htmlFor="image">Image</label>
@@ -72,27 +99,29 @@ export default function EventForm({ method, event }: EventFormProps) {
         />
         <label htmlFor="date">Date</label>
         <input
+          ref={date}
           id="date"
           type="datetime-local"
           name="date"
-          required
+          // required
           defaultValue={formattedDate}
         />
         <label htmlFor="description">Description</label>
         <textarea
+          ref={description}
           id="description"
           name="description"
           rows={5}
-          required
+          // required
           defaultValue={event ? event.description : ""}
         />
         <div className={classes.actions}>
-          <button type="button" onClick={handleCancel} disabled={isSubmitting}>
+          <Button type="button" onClick={handleCancel} disabled={isSubmitting}>
             Cancel
-          </button>
-          <button disabled={isSubmitting}>
+          </Button>
+          <Button disabled={isSubmitting}>
             {isSubmitting ? "Submitting..." : "Save"}
-          </button>
+          </Button>
         </div>
       </Form>
       {data && data.errors && (
@@ -102,7 +131,7 @@ export default function EventForm({ method, event }: EventFormProps) {
           ))}
         </ul>
       )}
-    </>
+    </motion.div>
   );
 }
 
