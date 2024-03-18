@@ -10,15 +10,6 @@ export default function Newsletter() {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const [hasSubscribed, setHasSubscribed] = useState<boolean>();
 
-  // useEffect(() => {
-  //   if (state === "idle" && data && data.message) {
-  //     window.alert(data.message);
-  //     emailRef.current!.value = "";
-  //   } else if (state === "idle" && data && data.error) {
-  //     window.alert(data.error);
-  //   }
-  // }, [data, state]);
-
   function handleOpen() {
     setHasSubscribed(true);
   }
@@ -47,10 +38,13 @@ export default function Newsletter() {
           aria-label="Newsletter subscription email input"
           // required
         />
-        <Button className="signupButton" onClick={handleOpen}>
-          Subscribe
+        <Button
+          className="signupButton"
+          onClick={handleOpen}
+          // disabled={hasSubscribed}
+        >
+          {hasSubscribed ? "Subscribing..." : "Subscribe"}
         </Button>
-        {/* <button className="signupButton">Subscribe</button> */}
       </fetcher.Form>
     </>
   );

@@ -63,9 +63,9 @@ export default function EventItem({ event }: { event: Event }) {
         )}
       </AnimatePresence>
       <motion.article
+        key={event.title}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -30 }}
         className={classes.event}
       >
         <img src={event.image} alt={event.title} />
