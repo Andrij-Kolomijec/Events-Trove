@@ -10,7 +10,7 @@ import {
 import classes from "./Authentication.module.css";
 import { type Action } from "../components/events/EventForm";
 import { useRef } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Button from "../components/Button";
 
 export default function Authentication() {
@@ -30,7 +30,7 @@ export default function Authentication() {
 
   return (
     <motion.div
-      layout
+      // layout
       initial={{ opacity: 0, y: -30 }}
       animate={{ opacity: 1, y: 0 }}
     >
@@ -57,26 +57,35 @@ export default function Authentication() {
             required
           />
         </div>
-        {!isLogin && (
-          <div className={classes.input}>
-            <label htmlFor="passwordConfirm">Confirm password</label>
-            <input
-              name="passwordConfirm"
-              id="passwordConfirm"
-              type="password"
-              autoComplete="off"
-              required
-            />
-          </div>
-        )}
-        <div className={classes.buttons}>
+        <AnimatePresence>
+          {!isLogin && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              className={classes.input}
+            >
+              <label htmlFor="passwordConfirm">Confirm password</label>
+              <input
+                name="passwordConfirm"
+                id="passwordConfirm"
+                type="password"
+                autoComplete="off"
+                required
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <motion.div layout className={classes.buttons}>
           <Button disabled={isSubmitting}>
             {isSubmitting ? "Submitting..." : isLogin ? "Log In" : "Sign Up"}
           </Button>
-          {isLogin && (
-            <Button onClick={handleGuestLogin}>Log in as a Guest</Button>
-          )}
-        </div>
+          <AnimatePresence>
+            {isLogin && (
+              <Button onClick={handleGuestLogin}>Log in as a Guest</Button>
+            )}
+          </AnimatePresence>
+        </motion.div>
         {isLogin ? (
           <p>
             Don't have an account? <br /> Click{" "}

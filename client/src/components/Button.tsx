@@ -25,6 +25,9 @@ export default function Button({
         // mass: 1,
         // damping: 10,
       }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0 }}
       {...props}
     >
       {children}
