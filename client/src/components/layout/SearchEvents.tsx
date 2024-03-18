@@ -1,5 +1,6 @@
 import { type Event } from "../events/EventsList";
 import dateFormatter from "../../utils/dateFormatter";
+import { useRef } from "react";
 
 type SearchEventsProps = {
   events: Event[];
@@ -7,7 +8,11 @@ type SearchEventsProps = {
 };
 
 export default function SearchEvents({ events, onChange }: SearchEventsProps) {
+  const lastChange = useRef<NodeJS.Timeout | null>();
+
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    if (lastChange.current) clearTimeout(lastChange.current);
+
     const foundEvents = events.filter(
       (event) =>
         event.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
@@ -17,7 +22,10 @@ export default function SearchEvents({ events, onChange }: SearchEventsProps) {
         dateFormatter(event).includes(e.target.value)
     );
 
-    onChange(foundEvents);
+    lastChange.current = setTimeout(() => {
+      lastChange.current = null;
+      onChange(foundEvents);
+    }, 500);
   }
 
   return (
